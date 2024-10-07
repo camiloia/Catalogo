@@ -51,7 +51,7 @@ function Home() {
               <Card.Text>Precio: ${producto.precio}</Card.Text>
               <Button
                 variant="primary"
-                onClick={() => navigate("/detalle", { state: { producto } })} // Pasando el producto
+                onClick={() => navigate("/detalle", { state: { producto } })}
               >
                 Ver más
               </Button>
@@ -71,7 +71,7 @@ function Home() {
             <Navbar.Collapse id="navbarScroll">
               <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                 <Nav.Link href="#action1">Home</Nav.Link>
-                <Nav.Link href="#action2">Productos</Nav.Link>
+                <Nav.Link onClick={() => navigate("/productos")}>Productos</Nav.Link>
                 <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
               </Nav>
               <Form className="d-flex">
