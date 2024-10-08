@@ -1,6 +1,5 @@
 import '../App.css';
 import { useNavigate } from "react-router-dom";
-import { Route } from 'react-router-dom';
 // Carousel
 import Image from '../Imgs/banner1.png';
 import Image2 from '../Imgs/banner2.png';
@@ -76,7 +75,7 @@ function Home() {
               </Nav>
               <Form className="d-flex">
                 <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
-                <Button variant="outline-success">Search</Button>
+                <Button variant="outline-success">Buscar</Button>
               </Form>
             </Navbar.Collapse>
           </Container>
