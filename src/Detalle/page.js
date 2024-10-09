@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import Carousel from 'react-bootstrap/Carousel';
 
 function Detalle() {
   const location = useLocation();
@@ -8,7 +7,6 @@ function Detalle() {
   if (!producto) {
     return <div>No se encontró el producto.</div>;
   }
-  console.log(producto.images[0], "1 ", producto.images[1], "2");
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>{producto.title}</h1>
