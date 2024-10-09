@@ -1,86 +1,78 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchInput, { createFilter } from 'react-search-input';
+import axios from 'axios';
 
-import producto1 from '../Imgs/producto_1.jpg';
-import producto2 from '../Imgs/producto_2.jpg';
-import producto3 from '../Imgs/producto_3.jpg';
-import producto4 from '../Imgs/producto_4.jpg';
-import producto5 from '../Imgs/producto_5.jpeg';
-import producto6 from '../Imgs/producto_6.jpg';
+const Productos = () => {
+  const [productos, setProductos] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
+  const [filtro, setFiltro] = useState([]);
 
-const productos = [
-  { name: 'Collar 1', descripcion: 'Collar elegante de diseño exclusivo', precio: '1000', imagen: producto1, categoría: 'collar' },
-  { name: 'Anillo 2', descripcion: 'Anillo de oro de 18k', precio: '2000', imagen: producto2, categoría: 'anillo' },
-  { name: 'Anillo 3', descripcion: 'Anillo con piedras preciosas', precio: '3000', imagen: producto3, categoría: 'anillo' },
-  { name: 'Anillo 4', descripcion: 'Anillo clásico de plata', precio: '4000', imagen: producto4, categoría: 'anillo' },
-  { name: 'Aritos 5', descripcion: 'Aritos modernos y livianos', precio: '5000', imagen: producto5, categoría: 'aritos' },
-  { name: 'Collar 6', descripcion: 'Collar con perlas naturales', precio: '6000', imagen: producto6, categoría: 'collar' },
-];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://dummyjson.com/products');
+        setProductos(response.data.products);
 
-const FILTRO = ['name', 'precio', 'descripcion'];
-
-class Productos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      selectedValue: '',
+        // Obtiene categorías únicas
+        const categoriasUnicas = [...new Set(response.data.products.map(producto => producto.category))];
+        setFiltro(categoriasUnicas);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
-  }
 
-  Barra(term) {
-    this.setState({ searchTerm: term });
-  }
+    fetchProducts();
+  }, []);
 
-  handlePickerChange = (event) => {
-    this.setState({ selectedValue: event.target.value });
-  }
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
 
-  renderProducts = () => {
-    const { searchTerm, selectedValue } = this.state;
-    const productos_filtrados = productos
-      .filter(createFilter(searchTerm, FILTRO))
-      .filter(producto => !selectedValue || producto.categoría === selectedValue);
+  const handlePickerChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
-    if (productos_filtrados.length === 0) {
+  const renderProducts = () => {
+    const productosFiltrados = productos
+      .filter(createFilter(searchTerm, ['title', 'description']))
+      .filter(producto => !selectedValue || producto.category === selectedValue);
+
+    if (productosFiltrados.length === 0) {
       return <div style={styles.noResults}>No se encontró nada</div>;
     }
 
-    return productos_filtrados.map((producto) => (
-      <div key={producto.name} style={styles.product}>
-        <img src={producto.imagen} alt={producto.name} style={styles.image} />
-        <h3>{producto.name}</h3>
-        <p>{producto.descripcion}</p>
-        <div style={styles.price}>${producto.precio}</div>
+    return productosFiltrados.map((producto) => (
+      <div key={producto.id} style={styles.product}>
+        <img src={producto.thumbnail} alt={producto.title} style={styles.image} />
+        <h3>{producto.title}</h3>
+        <p>{producto.description}</p>
+        <div style={styles.price}>${producto.price}</div>
         <button style={styles.button}>Añadir al carrito</button>
       </div>
     ));
-  }
+  };
 
-  render() {
-    return (
-      <div style={styles.container}>
-        <h1 style={styles.title}>Tienda de Productos</h1>
-        <div style={styles.filtroContainer}>
-          <label>Filtro:</label>
-          <select onChange={this.handlePickerChange} value={this.state.selectedValue}>
-            <option value="">Todos</option>
-            <option value="collar">Collares</option>
-            <option value="anillo">Anillos</option>
-            <option value="pulsera">Pulseras</option>
-            <option value="aritos">Aritos</option>
-          </select>
-        </div>
-
-        <SearchInput style={styles.searchInput} onChange={this.Barra.bind(this)} placeholder="Buscar productos..." />
-
-        <div style={styles.productsContainer}>
-          {this.renderProducts()}
-        </div>
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>Tienda de Productos</h1>
+      <div style={styles.filtroContainer}>
+        <label>Filtro:</label>
+        <select onChange={handlePickerChange} value={selectedValue}>
+          <option value="">Todos</option>
+          {filtro.map((categoria) => (
+            <option key={categoria} value={categoria}>{categoria}</option>
+          ))}
+        </select>
       </div>
-    );
-  }
-}
+
+      <SearchInput style={styles.searchInput} onChange={handleSearch} placeholder="Buscar productos..." />
+      <div style={styles.productsContainer}>
+        {renderProducts()}
+      </div>
+    </div>
+  );
+};
 
 const styles = {
   container: {

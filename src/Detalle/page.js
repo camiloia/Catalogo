@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import Carousel from 'react-bootstrap/Carousel';
 
 function Detalle() {
   const location = useLocation();
@@ -7,16 +8,28 @@ function Detalle() {
   if (!producto) {
     return <div>No se encontró el producto.</div>;
   }
-
+  console.log(producto.images[0], "1 ", producto.images[1], "2");
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>{producto.name}</h1>
-      <img src={producto.imagen} alt={producto.name} style={styles.image} />
-      <p style={styles.price}>Precio: ${producto.precio}</p>
-      <p style={styles.description}>{producto.descripcion}</p>
+      <h1 style={styles.title}>{producto.title}</h1>
+      <img src={producto.thumbnail} alt={producto.name} style={styles.image} />
+      <p style={styles.price}>Precio: ${producto.price}</p>
+      <p style={styles.description}>{producto.description}</p>
     </div>
   );
 }
+
+
+/* en caso de tener más imagenes en reviews
+<Carousel>
+        {producto.images.map((image, index) => (
+          <Carousel.Item key={index}>
+            <img className="d-block w-100" src={image} alt={`imagen ${index + 1}`} />
+          </Carousel.Item>
+        ))
+        }
+    </Carousel>
+ */
 
 const styles = {
   container: {
