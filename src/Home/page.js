@@ -25,12 +25,12 @@ import Card from 'react-bootstrap/Card'
 
 
 const productos = [
-  { name: 'collar 1', descripcion: 'blablala', precio: '1000', imagen: producto1 },
-  { name: 'collar 2', descripcion: 'blablala', precio: '1000', imagen: producto2 },
-  { name: 'collar 3', descripcion: 'blablala', precio: '1000', imagen: producto3 },
-  { name: 'collar 4', descripcion: 'blablala', precio: '1000', imagen: producto4 },
-  { name: 'collar 5', descripcion: 'blablala', precio: '1000', imagen: producto5 },
-  { name: 'collar 6', descripcion: 'blablala', precio: '1000', imagen: producto6 },
+  { name: 'Collar 1', descripcion: 'Collar elegante de diseño exclusivo', precio: '1000', imagen: producto1, categoría: 'collar' },
+  { name: 'Anillo 2', descripcion: 'Anillo de oro de 18k', precio: '2000', imagen: producto2, categoría: 'anillo' },
+  { name: 'Anillo 3', descripcion: 'Anillo con piedras preciosas', precio: '3000', imagen: producto3, categoría: 'anillo' },
+  { name: 'Anillo 4', descripcion: 'Anillo clásico de plata', precio: '4000', imagen: producto4, categoría: 'anillo' },
+  { name: 'Aritos 5', descripcion: 'Aritos modernos y livianos', precio: '5000', imagen: producto5, categoría: 'aritos' },
+  { name: 'Collar 6', descripcion: 'Collar con perlas naturales', precio: '6000', imagen: producto6, categoría: 'collar' },
 ];
 
 function Home() {
