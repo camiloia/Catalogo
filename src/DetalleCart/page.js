@@ -23,7 +23,7 @@ function Detalles() {
         ))}
       </ul>
 
-      <h3>Subtotal: ${totalCarrito}</h3>
+      <h3>Subtotal: ${totalCarrito}   </h3>
     </div>
   );
 }
