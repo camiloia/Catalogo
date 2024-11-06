@@ -1,24 +1,38 @@
-import React, { createContext, useContext, useState } from 'react';
 
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+// Create CartContext
 const CartContext = createContext();
 
-export const CartProvider = () => {
-  const [cart, setCart] = useState([]);
+// CartProvider component that provides the cart state
+export const CartProvider = ({ children }) => {
+  const [cart, setCarrito] = useState(() => {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product) => {
-    setCart((prevCart) => prevCart.concat(product));
+    console.log("adcarrt entre")
+    setCarrito((prevCart) => prevCart.concat(product));
+    //decir q se agreg´´o
+    console.log(cart, " cart conteniod");
   };
+
+  //const eliminarProductoCart = (producto) =
 
   const getTotalQuantity = () => cart.length;
-  return {
-    cart,
-    addToCart,
-    getTotalQuantity,
-  };
+
+  return (
+    <CartContext.Provider value={{ cart, addToCart, getTotalQuantity }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
-
-//para usar context
 export const useCart = () => {
   return useContext(CartContext);
 };

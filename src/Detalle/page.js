@@ -19,6 +19,7 @@ function Detalle() {
       <p style={styles.price}>Precio: ${producto.price}</p>
       <p style={styles.description}>{producto.description}</p>
       <button onClick={() => addToCart(producto)}>Agregar a carrito</button>
+      {console.log(producto)}
     </div>
     
     </>

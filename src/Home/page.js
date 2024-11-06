@@ -19,6 +19,55 @@ import Navbar from 'react-bootstrap/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useCart } from '../Cart/page';
+
+
+function OffCanvasExample({ name, ...props }) {
+    const [show, setShow] = useState(false);
+    const { cart } = useCart();
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [repetidos, setRepetidos] = useState([]);
+    useEffect(()=> {
+        const productosRepetidos = (cart) => {
+            const occurrences = cart.reduce((acc, product) => {
+                acc[product.title] = (acc[product.title] || 0) + 1; // Contar por título del producto
+                return acc;
+            }, {});
+            return occurrences;
+        };
+        var repetidos = productosRepetidos(cart);
+        console.log(repetidos);
+        setRepetidos(repetidos);
+    }, [cart])
+    
+    return (
+        <>
+          <Button variant="primary" onClick={handleShow} className="me-2">
+          {name}  <FontAwesomeIcon icon={faCartShopping}/>
+          </Button>
+          <Offcanvas show={show} onHide={handleClose} {...props}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title><FontAwesomeIcon icon={faCartShopping}/></Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              Productos
+
+              {cart.map((product, index) => (
+                <li key={index}>
+                <img src={product.thumbnail} alt={product.title} style={{ width: '50px', height: '50px' }} />
+                <p>{product.title}</p>
+                <p>Precio: ${product.price * repetidos[product.title] || 1}</p> 
+                </li>
+              ))}
+
+            </Offcanvas.Body>
+          </Offcanvas>
+        </>
+      );
+}  
+
 function Home() {
     const navigate = useNavigate();
     const [productos, setProductos] = useState([]);
@@ -56,6 +105,7 @@ function Home() {
     if (loading) {
         return <div>Cargando...</div>;
     }
+    
 
     return (<>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -74,7 +124,8 @@ function Home() {
                 <SearchInput  onChange={handleSearch} placeholder="Buscar productos..." />
                 <Button variant="outline-success">Buscar</Button>
               </Form>
-              <FontAwesomeIcon icon={faCartShopping} />
+            
+            <OffCanvasExample placement={'end'} name={'Carrito'} />
             </Navbar.Collapse>
           </Container>
         </Navbar>
