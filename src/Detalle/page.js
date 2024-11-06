@@ -1,19 +1,27 @@
 import { useLocation } from "react-router-dom";
+import { useCart } from '../Cart/page';
+import React, { useState } from 'react';
 
 function Detalle() {
   const location = useLocation();
+  const { addToCart, getTotalQuantity } = useCart(); // Usamos el contexto
+  const [productos, setProductos] = useState([]);
   const { producto } = location.state || {}; 
 
   if (!producto) {
     return <div>No se encontró el producto.</div>;
   }
   return (
+    <>
     <div style={styles.container}>
       <h1 style={styles.title}>{producto.title}</h1>
       <img src={producto.thumbnail} alt={producto.name} style={styles.image} />
       <p style={styles.price}>Precio: ${producto.price}</p>
       <p style={styles.description}>{producto.description}</p>
+      <button onClick={() => addToCart(producto)}>Agregar a carrito</button>
     </div>
+    
+    </>
   );
 }
 

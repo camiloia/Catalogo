@@ -1,7 +1,7 @@
 import '../App.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import SearchInput from 'react-search-input'; //npm install react-search-input --save
 // Carousel
@@ -16,11 +16,15 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+
 function Home() {
     const navigate = useNavigate();
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const CartContext = createContext();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -70,6 +74,7 @@ function Home() {
                 <SearchInput  onChange={handleSearch} placeholder="Buscar productos..." />
                 <Button variant="outline-success">Buscar</Button>
               </Form>
+              <FontAwesomeIcon icon={faCartShopping} />
             </Navbar.Collapse>
           </Container>
         </Navbar>
