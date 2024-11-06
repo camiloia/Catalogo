@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 
 function Detalle() {
   const location = useLocation();
-  const { addToCart, getTotalQuantity } = useCart(); // Usamos el contexto
-  const [productos, setProductos] = useState([]);
+  const { addToCart, getTotalQuantity } = useCart(); 
   const { producto } = location.state || {}; 
 
   if (!producto) {
