@@ -10,28 +10,31 @@ import Image2 from "../Imgs/banner2.png";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+//BOOTSTRAP
 import Logo from "../Imgs/logo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
+//FONTAWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+//CARRITO
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useCart, removeFromCart  } from "../Cart/page.js";
 
+//OFFCANVAS DEL CARRITO
 function OffCanvasExample({ name, ...props }) {
   const [show, setShow] = useState(false);
   const { cart, removeFromCart } = useCart();
-
   const navigate = useNavigate();
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //STATE DEL CARRITO
   const [repetidos, setRepetidos] = useState(new Map());
   const [Norepetidos, setNoRepetidos] = useState([]);
   let totalCarrito = 0; 
@@ -40,6 +43,7 @@ function OffCanvasExample({ name, ...props }) {
     totalCarrito += product.price * cantidad;
   });
 
+  //SACA PRODUCTOS REPETIDOS
   useEffect(() => {
     const repetidos = cart.reduce((contador, producto) => {
       contador[producto.title] = (contador[producto.title] || 0) + 1;
@@ -54,12 +58,12 @@ function OffCanvasExample({ name, ...props }) {
     setNoRepetidos(arrayUnicos);
   }, [cart]);
 
+
   return (
     <>
       <Button variant="primary" onClick={handleShow} className="me-2">
         {name} <FontAwesomeIcon icon={faCartShopping} />
       </Button>
-
       <Offcanvas show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
@@ -103,6 +107,7 @@ function Home() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  //TRAEMOS API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
