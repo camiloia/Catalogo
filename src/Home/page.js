@@ -18,13 +18,14 @@ import Navbar from "react-bootstrap/Navbar";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useCart } from "../Cart/page";
+import { useCart, removeFromCart  } from "../Cart/page.js";
 
 function OffCanvasExample({ name, ...props }) {
   const [show, setShow] = useState(false);
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart();
 
   const navigate = useNavigate();
 
@@ -44,6 +45,7 @@ function OffCanvasExample({ name, ...props }) {
       contador[producto.title] = (contador[producto.title] || 0) + 1;
       return contador;
     }, {});
+
     setRepetidos(repetidos);
     const arrayUnicos = cart.filter(
       (producto, index, cart) =>
@@ -80,6 +82,12 @@ function OffCanvasExample({ name, ...props }) {
                 <p>
                   Precio: ${product.price * (repetidos[product.title] || 1)}
                 </p>
+                <Button
+                  variant="danger"
+                  onClick={() => removeFromCart(product.id)} // Llamamos a removeFromCart
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
               </li>
             ))}
             <h3>Subtotal : {totalCarrito} </h3>

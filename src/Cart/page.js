@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Create CartContext
@@ -16,18 +15,19 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product) => {
-    console.log("adcarrt entre")
     setCarrito((prevCart) => prevCart.concat(product));
-    //decir q se agreg´´o
-    console.log(cart, " cart conteniod");
+    console.log(cart, " cart contenido");
   };
-
-  //const eliminarProductoCart = (producto) =
 
   const getTotalQuantity = () => cart.length;
 
+  // Función para eliminar un producto del carrito
+  const removeFromCart = (productId) => {
+    setCarrito((prevCart) => prevCart.filter(product => product.id !== productId));
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, getTotalQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, getTotalQuantity, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
@@ -36,3 +36,4 @@ export const CartProvider = ({ children }) => {
 export const useCart = () => {
   return useContext(CartContext);
 };
+
