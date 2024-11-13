@@ -54,33 +54,36 @@ function OffCanvasExample({ name, ...props }) {
     const arrayUnicos = cart.filter(
       (producto, index, cart) =>
         index === cart.findIndex((p) => p.title === producto.title)
-    ); // saca todos los productos repetidos :)
+    ); // saca todos los productos repetidos :(
     setNoRepetidos(arrayUnicos);
   }, [cart]);
 
-
   return (
     <>
-      <Button variant="primary" onClick={handleShow} className="me-2">
+      <Button variant="primary" onClick={handleShow} style={styles.btnPrimary}>
         {name} <FontAwesomeIcon icon={faCartShopping} />
       </Button>
       <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>
+        <Offcanvas.Header closeButton style={styles.offcanvasHeader}>
+          <Offcanvas.Title style={styles.offcanvasTitle}>
             <FontAwesomeIcon icon={faCartShopping} /> Cart
           </Offcanvas.Title>
         </Offcanvas.Header>
 
-        <Offcanvas.Body>
+        <Offcanvas.Body style={styles.offcanvasBody}>
           <h5>Productos:</h5>
-          <button onClick={() => navigate("/detallecarrito" , { state: { Norepetidos, repetidos, totalCarrito } })}>Ver detalles</button>
-          <ul>
+          <button 
+            onClick={() => navigate("/detallecarrito", { state: { Norepetidos, repetidos, totalCarrito } })} 
+            style={styles.button}>
+            Ver detalles
+          </button>
+          <ul style={styles.offcanvasList}>
             {Norepetidos.map((product, index) => (
-              <li key={index}>
+              <li key={index} style={styles.offcanvasListItem}>
                 <img
                   src={product.thumbnail}
                   alt={product.title}
-                  style={{ width: "50px", height: "50px" }}
+                  style={styles.offcanvasImg}
                 />
                 <p>{product.title}</p>
                 <p>
@@ -89,12 +92,13 @@ function OffCanvasExample({ name, ...props }) {
                 <Button
                   variant="danger"
                   onClick={() => removeFromCart(product.id)} // Llamamos a removeFromCart
+                  style={styles.offcanvasBtnDanger}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </Button>
               </li>
             ))}
-            <h3>Subtotal : {totalCarrito} </h3>
+            <h3 style={styles.offcanvasH3}>Subtotal : {totalCarrito} </h3>
           </ul>
         </Offcanvas.Body>
       </Offcanvas>
@@ -142,10 +146,11 @@ function Home() {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+
+      <Navbar expand="lg" style={styles.navbar}>
         <Container fluid>
           <Navbar.Brand href="#">
-            <img style={{ width: "150px" }} src={Logo} alt="logo" />
+            <img style={styles.navbarBrand} src={Logo} alt="logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -154,11 +159,13 @@ function Home() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
-              <Nav.Link onClick={() => navigate("/productos")}>
+              <Nav.Link onClick={() => navigate("/home")} style={styles.navbarNavLink}>
+                Home
+              </Nav.Link>
+              <Nav.Link onClick={() => navigate("/productos")} style={styles.navbarNavLink}>
                 Productos
               </Nav.Link>
-              <Nav.Link onClick={() => navigate("/contacto")}>
+              <Nav.Link onClick={() => navigate("/contacto")} style={styles.navbarNavLink}>
                 Contacto
               </Nav.Link>
             </Nav>
@@ -166,8 +173,11 @@ function Home() {
               <SearchInput
                 onChange={handleSearch}
                 placeholder="Buscar productos..."
+                style={styles.formControl}
               />
-              <Button variant="outline-success">Buscar</Button>
+              <Button variant="outline-success" style={styles.btnOutlineSuccess}>
+                Buscar
+              </Button>
             </Form>
 
             <OffCanvasExample placement={"end"} name={"Carrito"} />
@@ -176,34 +186,37 @@ function Home() {
       </Navbar>
 
       <Container>
-        <Carousel>
+        <Carousel style={styles.caro}>
           <Carousel.Item>
-            <img className="d-block w-100" src={Image} alt="First slide" />
+            <img className="d-block w-100" src={Image} alt="First slide" style={styles.carouselItemImg} />
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={Image2} alt="Second slide" />
+            <img className="d-block w-100" src={Image2} alt="Second slide" style={styles.carouselItemImg} />
           </Carousel.Item>
         </Carousel>
 
-        <h2>Productos</h2>
+        {/* Título "Productos" con estilo */}
+        <h2 style={styles.productosTitle}>Productos</h2>
+
         <Row>
           {productos.slice(0, 10).map((producto) => (
             <Col xs={12} sm={6} md={4} key={producto.id}>
-              <Card style={{ margin: "1rem" }}>
+              <Card style={{ ...styles.card, ...styles.cardHover }}>
                 <Card.Img
                   variant="top"
                   src={producto.thumbnail}
                   alt={producto.title}
-                  style={{ height: "200px", width: "100%", objectFit: "cover" }}
+                  style={styles.cardImgTop}
                 />
-                <Card.Body>
-                  <Card.Title>{producto.title}</Card.Title>
-                  <Card.Text>Precio: ${producto.price}</Card.Text>
+                <Card.Body style={styles.cardBody}>
+                  <Card.Title style={styles.cardTitle}>{producto.title}</Card.Title>
+                  <Card.Text style={styles.cardText}>Precio: ${producto.price}</Card.Text>
                   <Button
                     variant="primary"
                     onClick={() =>
                       navigate("/detalle", { state: { producto } })
                     }
+                    style={styles.cardButton}
                   >
                     Ver más
                   </Button>
@@ -216,5 +229,154 @@ function Home() {
     </>
   );
 }
+
+const styles = {
+  body: {
+    fontFamily: 'Arial, sans-serif',
+    backgroundColor: '#f8f9fa',
+    margin: 0,
+    padding: 0
+  },
+  caro:{
+    marginBottom:'3rem',
+  },
+
+  navbar: {
+    backgroundColor: '#E9BABC', 
+    borderRadius: '5px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    marginBottom: '3rem',
+  },
+
+  navbarBrand: {
+    maxWidth: '150px'
+  },
+
+  navbarNavLink: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginRight: '15px'
+  },
+
+  formControl: {
+    borderRadius: '20px',
+    border: '1px solid #ccc'
+  },
+
+  btnOutlineSuccess: {
+    borderRadius: '20px',
+    backgroundColor: '#4CAF50',
+    color: 'white'
+  },
+
+  offcanvasBody: {
+    backgroundColor: '#ffffff',
+    color: '#333'
+  },
+
+  offcanvasHeader: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    borderBottom: '2px solid #ddd'
+  },
+
+  offcanvasTitle: {
+    fontWeight: 'bold'
+  },
+
+  offcanvasBtnDanger: {
+    backgroundColor: '#e74c3c',
+    border: 'none'
+  },
+
+  offcanvasList: {
+    listStyle: 'none',
+    paddingLeft: 0
+  },
+
+  offcanvasListItem: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '15px'
+  },
+
+  offcanvasImg: {
+    borderRadius: '5px',
+    marginRight: '10px'
+  },
+
+  offcanvasH3: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold'
+  },
+
+  card: {
+    borderRadius: '15px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+  },
+
+  cardHover: {
+    transform: 'translateY(-10px)',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+  },
+
+  cardImgTop: {
+    borderRadius: '15px 15px 0 0'
+  },
+
+  cardBody: {
+    backgroundColor: '#fff',
+    textAlign: 'center'
+  },
+
+  cardTitle: {
+    fontSize: '1.1rem',
+    fontWeight: 'bold'
+  },
+
+  cardText: {
+    color: '#4CAF50',
+    fontSize: '1.2rem',
+    fontWeight: 'bold'
+  },
+
+  cardButton: {
+    marginTop: '15px',
+    borderRadius: '20px',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none'
+  },
+
+  carouselItemImg: {
+    borderRadius: '10px',
+    transition: 'transform 0.3s ease'
+  },
+
+  productosTitle: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#E9BABC',
+    margin: '20px 0',
+    textAlign: 'center'
+  },
+
+  btnPrimary: {
+    backgroundColor: '#007bff',
+    border: 'none',
+    borderRadius: '20px'
+  },
+
+  button: {
+    border: 'none',
+    backgroundColor: 'transparent',
+    cursor: 'pointer'
+  },
+
+  buttonFocus: {
+    outline: 'none'
+  }
+};
 
 export default Home;
