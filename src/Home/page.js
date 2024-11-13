@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { View } from 'react-native';
+//npm install react-native-web
+//npm install react-native
+
+
 import SearchInput from "react-search-input"; //npm install react-search-input --save
 // Carousel
 import Image from "../Imgs/banner1.png";
@@ -72,6 +77,9 @@ function OffCanvasExample({ name, ...props }) {
 
         <Offcanvas.Body style={styles.offcanvasBody}>
           <h5>Productos:</h5>
+          <View
+            style={{ textDecoration: 'underline'}}
+          />
           <button 
             onClick={() => navigate("/detallecarrito", { state: { Norepetidos, repetidos, totalCarrito } })} 
             style={styles.button}>
@@ -313,7 +321,8 @@ const styles = {
   card: {
     borderRadius: '15px',
     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    marginBottom: '6rem',
   },
 
   cardHover: {
@@ -327,7 +336,7 @@ const styles = {
 
   cardBody: {
     backgroundColor: '#fff',
-    textAlign: 'center'
+    textAlign: 'center',
   },
 
   cardTitle: {
@@ -344,7 +353,7 @@ const styles = {
   cardButton: {
     marginTop: '15px',
     borderRadius: '20px',
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#E9BABC',
     color: 'white',
     border: 'none'
   },
@@ -359,7 +368,9 @@ const styles = {
     fontWeight: 'bold',
     color: '#E9BABC',
     margin: '20px 0',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: '4rem',
+    marginTop: '6rem',
   },
 
   btnPrimary: {

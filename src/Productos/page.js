@@ -61,40 +61,41 @@ const Productos = () => {
 
   return (
     <>
-    <Navbar expand="lg" className="bg-body-tertiary">
-          <Container fluid>
-            <Navbar.Brand href="#">
-              <img style={{ width: '150px' }} src={Logo} alt="logo" />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll">
-              <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-                <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
-                <Nav.Link onClick={() => navigate("/productos")}>Productos</Nav.Link>
-                <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container fluid>
+          <Navbar.Brand href="#">
+            <img style={{ width: '120px' }} src={Logo} alt="logo" />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+              <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
+              <Nav.Link onClick={() => navigate("/productos")}>Productos</Nav.Link>
+              <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-    <div style={styles.container}>
-      <h1 style={styles.title}>Tienda de Productos</h1>
-      <div style={styles.filterSearchContainer}>
-        <div style={styles.filtroContainer}>
-          <label style={styles.label}>Filtro:</label>
-          <select onChange={handlePickerChange} value={selectedValue} style={styles.select}>
-            <option value="">Todos</option>
-            {filtro.map((categoria) => (
-              <option key={categoria} value={categoria}>{categoria}</option>
-            ))}
-          </select>
+      <div style={styles.container}>
+        <h1 style={styles.title}>Tienda de Productos</h1>
+        <div style={styles.filterSearchContainer}>
+          <div style={styles.filtroContainer}>
+            <label style={styles.label}>Filtro:</label>
+            <select onChange={handlePickerChange} value={selectedValue} style={styles.select}>
+              <option value="">Todos</option>
+              {filtro.map((categoria) => (
+                <option key={categoria} value={categoria}>{categoria}</option>
+              ))}
+            </select>
+          </div>
+          <SearchInput style={styles.searchInput} onChange={handleSearch} placeholder="Buscar productos..." />
         </div>
-        <SearchInput style={styles.searchInput} onChange={handleSearch} placeholder="Buscar productos..." />
+        <div style={styles.productsContainer}>
+          {renderProducts()}
+        </div>
       </div>
-      <div style={styles.productsContainer}>
-        {renderProducts()}
-      </div>
-    </div></>
+    </>
   );
 };
 
@@ -103,15 +104,15 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '20px',
+    padding: '15px',
     fontFamily: 'Arial, sans-serif',
     backgroundColor: '#f9f9f9',
     minHeight: '100vh',
   },
   title: {
-    marginBottom: '30px',
+    marginBottom: '20px',
     color: '#333',
-    fontSize: '2.5em',
+    fontSize: '2em',
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -120,13 +121,13 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    marginBottom: '20px',
+    marginBottom: '15px',
   },
   searchInput: {
     margin: '0 10px',
-    padding: '12px',
-    width: '400px',
-    border: '2px solid #0070f3',
+    padding: '10px',
+    width: '300px',
+    border: '2px solid #E9BABC',  // Usar color #E9BABC para el borde
     borderRadius: '25px',
     outline: 'none',
     transition: 'border-color 0.3s',
@@ -139,56 +140,56 @@ const styles = {
   },
   label: {
     marginRight: '10px',
-    fontSize: '1.1em',
+    fontSize: '1em',
     color: '#555',
   },
   select: {
-    padding: '10px',
-    border: '2px solid #0070f3',
+    padding: '8px',
+    border: '2px solid #E9BABC',  // Usar color #E9BABC para el borde
     borderRadius: '25px',
     backgroundColor: '#fff',
   },
   productsContainer: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-    gap: '30px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+    gap: '20px',
     width: '100%',
     maxWidth: '1200px',
   },
   product: {
-    border: '1px solid #e1e1e1',
-    borderRadius: '10px',
-    padding: '15px',
+    border: '1px solid #E9BABC',  // Usar color #E9BABC para el borde
+    borderRadius: '8px',
+    padding: '10px',
     textAlign: 'center',
     background: '#ffffff',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     transition: 'transform 0.2s, box-shadow 0.2s',
   },
   productTitle: {
-    fontSize: '1.3em',
+    fontSize: '1.1em',
     fontWeight: 'bold',
     color: '#333',
     margin: '10px 0',
   },
   description: {
-    fontSize: '0.9em',
+    fontSize: '0.85em',
     color: '#555',
     margin: '10px 0',
   },
   image: {
     width: '100%',
-    height: '200px',
+    height: '180px',
     objectFit: 'cover',
-    borderRadius: '10px',
+    borderRadius: '8px',
   },
   price: {
-    fontSize: '1.5em',
+    fontSize: '1.3em',
     color: '#b12704',
     margin: '10px 0',
   },
   button: {
-    padding: '10px',
-    background: '#0070f3',
+    padding: '8px 16px',
+    background: '#E9BABC',  // Usar color #E9BABC para el fondo del botón
     color: '#fff',
     border: 'none',
     borderRadius: '25px',
@@ -203,7 +204,7 @@ const styles = {
   productHover: {
     ':hover': {
       transform: 'scale(1.05)',
-      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)', 
+      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
     },
   },
 };

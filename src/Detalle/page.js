@@ -1,80 +1,82 @@
 import { useLocation } from "react-router-dom";
 import { useCart } from '../Cart/page';
-import React, { useState } from 'react';
 
 function Detalle() {
   const location = useLocation();
-  const { addToCart, getTotalQuantity } = useCart(); 
+  const { addToCart } = useCart(); 
   const { producto } = location.state || {}; 
 
   if (!producto) {
     return <div>No se encontró el producto.</div>;
   }
+
+  const handleAddToCart = () => {
+    addToCart(producto);
+    alert(`${producto.title} se ha agregado al carrito!`);  // Mostrar mensaje de confirmación
+  };
+
   return (
-    <>
     <div style={styles.container}>
       <h1 style={styles.title}>{producto.title}</h1>
       <img src={producto.thumbnail} alt={producto.name} style={styles.image} />
-      <p style={styles.price}>Precio: ${producto.price}</p>
+      <p style={styles.price}>${producto.price}</p>
       <p style={styles.description}>{producto.description}</p>
-      <button onClick={() => addToCart(producto)}>Agregar a carrito</button>
+      <button onClick={handleAddToCart} style={styles.button}>Agregar a carrito</button>
       {console.log(producto)}
     </div>
-    
-    </>
   );
 }
 
-
-/* en caso de tener más imagenes en reviews
-<Carousel>
-        {producto.images.map((image, index) => (
-          <Carousel.Item key={index}>
-            <img className="d-block w-100" src={image} alt={`imagen ${index + 1}`} />
-          </Carousel.Item>
-        ))
-        }
-    </Carousel>
- */
-
 const styles = {
   container: {
-    padding: '20px',
-    maxWidth: '600px',
+    padding: '15px',  
+    maxWidth: '650px',
     margin: 'auto',
-    marginTop: '2rem',
+    marginTop: '1rem',  
     backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-    border: '1px solid #e0e0e0',
+    borderRadius: '12px',  
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+    border: '1px solid #E9BABC',
+    textAlign: 'center',
   },
   title: {
-    fontSize: '26px',
+    fontSize: '22px',  
     fontWeight: 'bold',
-    marginBottom: '15px',
+    marginBottom: '12px',  
     color: '#333333',
-    textAlign: 'center',
   },
   image: {
     width: '100%',
     height: 'auto',
-    borderRadius: '10px',
-    marginBottom: '15px',
-    border: '1px solid #e0e0e0',
+    borderRadius: '8px',  
+    marginBottom: '12px',  
+    border: '1px solid #E9BABC',
   },
   description: {
-    fontSize: '18px',
-    marginBottom: '15px',
-    lineHeight: '1.5',
+    fontSize: '14px',  
+    marginBottom: '12px',  
+    lineHeight: '1.4',
     color: '#555555',
-    textAlign: 'center',
   },
   price: {
-    fontSize: '20px',
+    fontSize: '18px',  
     color: '#27ae60',
     fontWeight: 'bold',
-    textAlign: 'center',
+    marginBottom: '12px',  
   },
+  button: {
+    backgroundColor: '#E9BABC',
+    color: '#ffffff',
+    padding: '8px 16px',  
+    border: 'none',
+    borderRadius: '6px', 
+    cursor: 'pointer',
+    fontSize: '14px',  
+    transition: 'background-color 0.3s ease',
+  },
+  buttonHover: {
+    backgroundColor: '#d29b8c',
+  }
 };
 
 export default Detalle;
